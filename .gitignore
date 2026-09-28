@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Secrets – never commit
+.env
+
+# Data and model artefacts – too big for Git, and reproducible from code
+data/
+*.parquet
+*.csv
+mlruns/
+mlartifacts/
+
+# OS / editor
+.DS_Store
+Thumbs.db
