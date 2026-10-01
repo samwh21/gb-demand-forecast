@@ -7,7 +7,11 @@ authors = [
     { name = "samwh", email = "sam.white129705@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "httpx>=0.28.1",
+    "pandas>=3.0.6",
+    "pyarrow>=25.0.1",
+]
 
 [project.scripts]
 gb-demand-forecast = "gb_demand_forecast:main"
