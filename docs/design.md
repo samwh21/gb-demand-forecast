@@ -53,6 +53,7 @@ Every feature must be available at 09:00 on the issue day:
 - Clock-change days have 46/50 settlement periods – timestamps must handle these.
 - NESO changed its data source in 2026 – check for discontinuities.
 - Archived weather forecasts only go back to ~2021/22 – may limit the training window.
+- Yearly historic files lag by ~4 weeks; recent data must come from the Demand Data Update dataset.
 
 ## 9. Milestones
 - [ ] Data ingestion + validation
