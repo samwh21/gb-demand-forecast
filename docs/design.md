@@ -54,6 +54,9 @@ Every feature must be available at 09:00 on the issue day:
 - NESO changed its data source in 2026 – check for discontinuities.
 - Archived weather forecasts only go back to ~2021/22 – may limit the training window.
 - Yearly historic files lag by ~4 weeks; recent data must come from the Demand Data Update dataset.
+- Leak-free (day-2) forecast weather starts 5 February 2024, giving about 2⅔ years of honest training data.
+- Leak-free forecast weather: temperature and wind from 5 Feb 2024, radiation from 7 Mar 2024. Modelling period starts 8 Mar 2024.
+- Cloud cover forecasts missing 17–22 Apr 2026 (archive gap); left as missing, not filled from observations to avoid leakage.
 
 ## 9. Milestones
 - [ ] Data ingestion + validation
