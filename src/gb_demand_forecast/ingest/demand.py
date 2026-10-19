@@ -23,9 +23,9 @@ def parse_year(resource_name: str) -> int | None:
     return int(match.group(1)) if match else None
 
 
-def list_resources(client: httpx.Client) -> list[dict]:
-    """Ask the NESO CKAN API for every file in the historic demand dataset."""
-    response = client.get(f"{CKAN_BASE}/package_show", params={"id": DATASET_ID})
+def list_resources(client: httpx.Client, dataset_id: str = DATASET_ID) -> list[dict]:
+    """Ask the NESO CKAN API for every file in a dataset (default: historic demand)."""
+    response = client.get(f"{CKAN_BASE}/package_show", params={"id": dataset_id})
     response.raise_for_status()
     payload = response.json()
     if not payload.get("success"):
