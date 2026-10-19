@@ -68,3 +68,31 @@ so a 24-hour-old forecast for it would not yet exist. A 48-hour-old forecast alw
 | Forecast weather starts Feb 2024; radiation Mar 2024 | Modelling period starts 8 March 2024 |
 | Forecast cloud cover missing 17-22 Apr 2026 | Left as missing; not filled from observations (leakage). Could be filled from `_previous_day3` |
 | Day-2 forecast temperature MAE vs observed: 0.7°C (GB weighted average) | The accuracy cost of using honest features |
+
+## NESO benchmark: `data/processed/neso_benchmark.parquet`
+
+Source: NESO Data Portal, *Day Ahead Half Hourly Demand Forecast Performance* (single CSV,
+updated monthly), April 2021 onwards. The forecast to beat.
+
+| Column | Meaning | Units |
+|---|---|---|
+| `timestamp_utc`, `settlement_date`, `settlement_period` | As in the demand table; built from date + period, not NESO's `Datetime` column | |
+| `neso_forecast` | NESO's published day-ahead National Demand forecast | MW |
+| `neso_outturn` | NESO's actual National Demand, from a slightly different measurement than `nd` | MW |
+| `triad_avoidance` | Estimated demand reduction by users avoiding Triad charging peaks (313 non-zero rows) | MW |
+| `published` | When the forecast was published. Timezone convention inconsistent (see below) | approx. |
+
+**Validation (Oct 2026):**
+- Timestamps align with the demand table: median |outturn − nd| is 38 MW unshifted vs
+  450–950 MW when shifted by ±1–2 half-hours.
+- `neso_outturn` is on average ~30 MW below `nd` (median absolute gap 0.15%), stable across
+  years: a measurement difference, not a misalignment.
+- All forecasts are published the day before the target date. Published hours read 08 in GMT
+  months and 09 in BST months, the reverse of genuine UTC, so treat `published` as approximate
+  (morning of the day before, ~08:00–10:00 UK time). Matches our 09:00 issue time.
+
+**Scoring:** NESO and our model are both scored against our `nd`. NESO's MAPE is 2.50% against
+`nd` vs 2.51% against its own outturn, so the choice doesn't affect the benchmark.
+
+**NESO day-ahead MAPE vs `nd`:** 2021 2.13% · 2022 2.34% · 2023 2.33% · 2024 2.41% ·
+2025 2.69% · 2026 (to Sep) 3.26% · overall 2.50%.
